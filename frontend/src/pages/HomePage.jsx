@@ -3,7 +3,7 @@ import api from '../api'
 import Note from '../components/Note'
 
 const HomePage = () => {
-
+    
     const [notes, setNotes] = React.useState([])
     const [title, setTitle] = React.useState("")
     const [content, setContent] = React.useState("")
@@ -29,7 +29,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center gap-[60px] py-[30px]">
+        <div className="py-[80px] flex flex-col justify-center items-center gap-[60px] py-[30px]">
             <div className="flex flex-col justify-center items-center gap-[16px]">
                 <p className="text-black text-[18px] font-bold">Notes</p>
                 <div className="flex flex-col justify-center items-center gap-[8px]">
