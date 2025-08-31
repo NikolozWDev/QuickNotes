@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import api from '../api'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../AuthProvider'
 
 const Form = ({route, method}) => {
 
+    const { setIsAuthorized } = useAuth()
     const [username, setUsername] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [loading, setLoading] = React.useState(false)
@@ -20,6 +22,7 @@ const Form = ({route, method}) => {
             if(method === 'login') {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access)
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+                setIsAuthorized(true)
                 navigate('/')
             } else {
                 navigate('/login')
