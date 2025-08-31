@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { ACCESS_TOKEN } from './constants'
 import AuthProvider from './AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
@@ -10,7 +11,7 @@ import Navbar from './components/Navbar'
 import AboutPage from './pages/AboutPage'
 
 function Logout() {
-  localStorage.clear()
+localStorage.removeItem(ACCESS_TOKEN)
   return <Navigate to="/login" />
 }
 function RegisterAndLogout() {
@@ -24,7 +25,7 @@ const App = () => {
     <Router>
       <AuthProvider>
         <Navbar />
-        <div className="px-[20px] bg-[url(../public/assets/picture1.jpg)] bg-no-repeat bg-center bg-cover bg-fixed min-h-screen w-screen">
+        <div className="main-container px-[20px] bg-[url(../public/assets/picture1.jpg)] bg-no-repeat bg-center bg-cover bg-fixed min-h-screen w-screen">
           <Routes>
             <Route path="/" element={
               <ProtectedRoute>

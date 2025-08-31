@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
+import { ACCESS_TOKEN } from "../constants";
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -13,6 +15,11 @@ const Navbar = () => {
     } else {
       setMenubar(true);
     }
+  }
+  function logout() {
+    localStorage.removeItem(ACCESS_TOKEN)
+    setIsAuthorized(false)
+    navigate("/login")
   }
 
   return (
@@ -40,7 +47,10 @@ const Navbar = () => {
             </Link>
           {
             isAuthorized ? (
-              <div>user</div>
+              <div className="flex flex-row justify-center items-center gap-[12px]">
+                <p>user</p>
+                <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+              </div>
             ) : (
               <Link
                 to="/login"
@@ -96,7 +106,10 @@ const Navbar = () => {
           </Link>
           {
             isAuthorized ? (
-              <div>user</div>
+              <div className="flex flex-row justify-center items-center gap-[12px]">
+                <p>user</p>
+                <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+              </div>
             ) : (
               <Link
                 to="/login"
