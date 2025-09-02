@@ -29,6 +29,35 @@ export default {
         rubik: ['Rubik Wet Paint', 'cursive'],
         story: ['Story Script', 'cursive'],
       },
+      keyframes: {
+        navbar: {
+          '0%': {opacity: '0.8', transform: 'translateY(-60px)'},
+          '100%': {opacity: '1', transform: 'translateY(0px)'}
+        },
+        note: {
+          '0%': {opacity: '0'},
+          '100%': {opacity: '1'}
+        },
+        lefter: {
+          '0%': {transform: 'translateX(-350px)', pointerEvents: 'none'},
+          '100%': {transform: 'translateX(0px)', pointerEvents: 'auto'},
+        },
+        righter: {
+          '0%': {transform: 'translateX(350px)', pointerEvents: 'none'},
+          '100%': {transform: 'translateX(0px)', pointerEvents: 'auto'},
+        },
+        bottomer: {
+          '0%': {transform: 'translateY(350px)', pointerEvents: 'none'},
+          '100%': {transform: 'translateY(0px)', pointerEvents: 'auto'},
+        },
+      },
+      animation: {
+        navbar: 'navbar 0.8s linear',
+        note: 'note 0.6s linear',
+        lefter: 'lefter 0.6s linear',
+        righter: 'righter 0.6s linear',
+        bottomer: 'bottomer 0.6s linear',
+      },
     },
   },
   plugins: [],

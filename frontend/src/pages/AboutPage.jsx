@@ -2,9 +2,9 @@ import React from "react";
 
 const AboutPage = () => {
   return (
-    <div className="w-[100%] flex flex-row justify-center items-center py-[100px] md:py-[150px]">
+    <div className="w-[100%] flex flex-row justify-center items-center py-[100px] md:py-[150px] overflow-hidden">
       <div className="w-[100%] flex flex-col justify-center items-center gap-[50px] lg:w-[976px] lg:px-[20px]">
-        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px]">
+        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px] animate-lefter">
           <p className="text-red-500 font-bold text-[18px]">About Project</p>
           <p className="text-black text-[14px]">
             This project is a simple but fully functional note-taking
@@ -17,7 +17,7 @@ const AboutPage = () => {
             tasks, and reminders.
           </p>
         </div>
-        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px]">
+        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px] animate-righter">
           <p className="text-red-500 font-bold text-[18px]">My Notes</p>
           <p className="text-black text-[14px]">
             Each user can view a list of all their personal notes, create new
@@ -31,7 +31,7 @@ const AboutPage = () => {
             intuitive.
           </p>
         </div>
-        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px]">
+        <div className="flex flex-col justify-start items-start gap-[8px] pb-[20px] border-b-[1px] border-gray-400 rounded-[30px] animate-bottomer">
           <p className="text-red-500 font-bold text-[18px]">Stats/Summary</p>
           <p className="text-black text-[14px]">
             a summary of the notes created within the app. For example, it

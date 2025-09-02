@@ -3,11 +3,23 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { ACCESS_TOKEN } from "../constants";
 import { useNavigate } from 'react-router-dom'
+import api from "../api";
 
 const Navbar = () => {
 
   const { isAuthorized, setIsAuthorized } = useAuth()
+  const [username, setUsername] = React.useState("")
+  const [userMenu, setUserMenu] = React.useState(false)
   const [menubar, setMenubar] = React.useState(false);
+
+  React.useEffect(() => {
+    getUser()
+  }, [])
+
+  async function getUser() {
+    const res = await api.get("/api/user/me")
+    setUsername(res.data.username)
+  }
 
   function menuFunction() {
     if (menubar) {
@@ -22,9 +34,18 @@ const Navbar = () => {
     navigate("/login")
   }
 
+  // open user menu
+  function userMenuFunc() {
+    if(userMenu) {
+      setUserMenu(false)
+    } else {
+      setUserMenu(true)
+    }
+  }
+
   return (
     <>
-      <div className="flex flex-row justify-center items-center w-[100%] bg-yellow-100 z-[100] fixed">
+      <div className="flex flex-row justify-center items-center w-[100%] bg-yellow-100 z-[100] fixed animate-navbar">
         <div className="w-[100%] p-[20px] flex flex-row justify-between items-center z-[60] lg:w-[976px]">
           <Link
             to="/"
@@ -47,9 +68,21 @@ const Navbar = () => {
             </Link>
           {
             isAuthorized ? (
-              <div className="flex flex-row justify-center items-center gap-[12px]">
-                <p>user</p>
-                <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+              <div className="flex flex-row justify-center items-center gap-[12px] cursor-pointer group">
+                <div className="relative flex flex-row justify-center items-center gap-[4px] shadow-md border-[1px] border-gray-300 bg-yellow-200 py-[2px] px-[6px] rounded-[12px]">
+                  <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                  </svg>
+                  </div>
+                  <p className="text-[18px]">{username}</p>
+                    <div className="absolute pointer-events-none opacity-[0] translate-y-[-30px] group-hover:pointer-events-auto group-hover:opacity-[1] group-hover:translate-y-[0px] transition-all duration-[0.6s] flex flex-col justify-start items-center z-30 top-[25px] mt-2 w-[180px] bg-white shadow-lg rounded-[12px] p-3">
+                      <p className="break-words w-[100px]">name: <span className="font-bold">{username}</span></p>
+                      <p className="break-words w-[100px]">email: <small className="font-bold">gasdawdsawdsawd@gmail.com</small></p>
+                      <hr className="w-full my-[4px] border-gray-300" />
+                      <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+                  </div>
+                </div>
               </div>
             ) : (
               <Link
@@ -106,9 +139,21 @@ const Navbar = () => {
           </Link>
           {
             isAuthorized ? (
-              <div className="flex flex-row justify-center items-center gap-[12px]">
-                <p>user</p>
-                <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+              <div className="flex flex-row justify-center items-center gap-[12px] cursor-pointer group">
+                <div className="relative flex flex-row justify-center items-center gap-[4px] shadow-md border-[1px] border-gray-300 bg-yellow-200 py-[2px] px-[6px] rounded-[12px]">
+                  <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                  </svg>
+                  </div>
+                  <p className="text-[18px]">{username}</p>
+                    <div className="absolute pointer-events-none opacity-[0] translate-y-[-30px] group-hover:pointer-events-auto group-hover:opacity-[1] group-hover:translate-y-[0px] transition-all duration-[0.6s] flex flex-col justify-start items-center z-30 top-[25px] mt-2 w-[180px] bg-white shadow-lg rounded-[12px] p-3">
+                      <p className="break-words w-[100px]">name: <span className="font-bold">{username}</span></p>
+                      <p className="break-words w-[100px]">email: <small className="font-bold">gasdawdsawdsawd@gmail.com</small></p>
+                      <hr className="w-full my-[4px] border-gray-300" />
+                      <button onClick={logout} className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]">Logout</button>
+                  </div>
+                </div>
               </div>
             ) : (
               <Link

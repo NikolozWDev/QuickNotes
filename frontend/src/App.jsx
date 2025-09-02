@@ -15,7 +15,7 @@ localStorage.removeItem(ACCESS_TOKEN)
   return <Navigate to="/login" />
 }
 function RegisterAndLogout() {
-  localStorage.clear()
+  localStorage.removeItem(ACCESS_TOKEN)
   return <Navigate to="/register" />
 }
 

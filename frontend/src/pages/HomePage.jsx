@@ -26,19 +26,53 @@ const HomePage = () => {
     await api.delete(`/api/notes/delete/${id}/`);
     getNotes();
   }
+  const [isEditing, setIsEditing] = React.useState(null);
+  async function updateNotes(id, updatedData) {
+    validationNotes();
+    if (title.length > 48 || content.length > 1200) {
+      return;
+    }
+    await api.put(`/api/notes/update/${id}/`, updatedData);
+    setIsEditing(null);
+    getNotes()
+    setTitle("")
+    setContent("")
+    setOpenNote(false)
+    setOpenForm(false)
+  }
   async function createNotes(e) {
     e.preventDefault();
-    validationNotes()
-    if(title.length > 48 || content.length > 1200) {
-      return
+    validationNotes();
+    setIsEditing(null)
+    if (title.length > 48 || content.length > 1200) {
+      return;
     }
-
     await api.post("/api/notes/", { title, content });
     getNotes();
     setTitle("");
     setContent("");
     setOpenNote(false);
     setOpenForm(false);
+  }
+  function editNote(note) {
+    setIsEditing(note);
+    setTitle(note.title);
+    setContent(note.content);
+    setOpenForm(true);
+  }
+  function startCreateForm() {
+    setIsEditing(null)
+    setTitle("")
+    setContent("")
+    setOpenForm(true)
+  }
+  function handleForm(e) {
+    e.preventDefault();
+    if (isEditing && isEditing.id && isEditing !== null) {
+      updateNotes(isEditing.id, {title, content});
+    } else {
+      createNotes(e);
+    }
   }
   function searchNotes(id) {
     const note = notes.find((p) => p.id === id);
@@ -80,7 +114,9 @@ const HomePage = () => {
   // open/close create form
   const [openForm, setOpenForm] = React.useState(false);
   function openFormFunc() {
+    startCreateForm()
     setOpenForm(true);
+    setIsEditing(null)
     closeNoteFunc();
     cancelDelete();
   }
@@ -91,21 +127,22 @@ const HomePage = () => {
   function clearForm() {
     setTitle("");
     setContent("");
+    setIsEditing(null)
   }
   // validations 48/1200
-  const [validatedTitle, setValidatedTitle] = React.useState(false)
-  const [validatedContent, setValidatedContent] = React.useState(false)
+  const [validatedTitle, setValidatedTitle] = React.useState(false);
+  const [validatedContent, setValidatedContent] = React.useState(false);
   function validationNotes() {
-    if(title.length > 48) {
-      setValidatedTitle(true)
+    if (title.length > 48) {
+      setValidatedTitle(true);
     } else {
-      setValidatedContent(false)
+      setValidatedContent(false);
     }
 
-    if(content.length > 1200) {
-      setValidatedContent(true)
+    if (content.length > 1200) {
+      setValidatedContent(true);
     } else {
-      setValidatedContent(false)
+      setValidatedContent(false);
     }
   }
 
@@ -128,6 +165,7 @@ const HomePage = () => {
                 key={note.id}
                 note={note}
                 onSearch={searchNotes}
+                onEdit={editNote}
                 onDelete={areYouSure}
               />
             );
@@ -182,7 +220,7 @@ const HomePage = () => {
       </div>
       {/* form container */}
       <form
-        onSubmit={createNotes}
+        onSubmit={handleForm}
         className={`fixed
               top-1/2
               left-1/2
@@ -226,7 +264,12 @@ const HomePage = () => {
         </div>
         <div className="w-[100%] px-[20px] pb-[30px] flex flex-col justify-center items-center gap-[12px]">
           <div className="w-[100%] flex flex-col justify-start items-start gap-[4px]">
-            <p className="text-[14px] text-gray-600">Title: <span className="text-[14px] text-red-500">{validatedTitle ? "title must be less then 48" : null}</span></p>
+            <p className="text-[14px] text-gray-600">
+              Title:{" "}
+              <span className="text-[14px] text-red-500">
+                {validatedTitle ? "title must be less then 48" : null}
+              </span>
+            </p>
             <input
               type="text"
               name="title"
@@ -238,7 +281,12 @@ const HomePage = () => {
             />
           </div>
           <div className="w-[100%] flex flex-col justify-start items-start gap-[4px]">
-            <p className="text-[14px] text-gray-600">Content: <span className="text-[14px] text-red-500">{validatedContent ? "content must be less then 1200" : null}</span></p>
+            <p className="text-[14px] text-gray-600">
+              Content:{" "}
+              <span className="text-[14px] text-red-500">
+                {validatedContent ? "content must be less then 1200" : null}
+              </span>
+            </p>
             <textarea
               type="text"
               name="content"
@@ -252,11 +300,11 @@ const HomePage = () => {
           </div>
           <div className="w-[100%] flex flex-row justify-center lg:justify-start items-center gap-[12px]">
             <button
-              onClick={createNotes}
+              onClick={handleForm}
               className="w-[50%] px-[20px] py-[6px] rounded-[8px] bg-gray-700 text-white lg:w-[150px] hover:opacity-[0.8] transition-all duration-[0.3s]"
               type="submit"
             >
-              Submit
+              {isEditing ? (<p>Update</p>) : (<p>Submit</p>)}
             </button>
             <button
               onClick={clearForm}
