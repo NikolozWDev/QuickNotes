@@ -158,7 +158,7 @@ const HomePage = () => {
             Create Note
           </button>
         </div>
-        <div className="w-[100%] flex flex-col justify-start items-start gap-[24px]">
+        <div className="w-[100%] flex flex-col-reverse justify-start items-start gap-[24px]">
           {notes.map((note) => {
             return (
               <Note

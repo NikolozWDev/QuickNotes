@@ -17,7 +17,7 @@ const Navbar = () => {
   }, [])
 
   async function getUser() {
-    const res = await api.get("/api/user/me")
+    const res = await api.get("/api/user/me/")
     setUsername(res.data.username)
   }
 

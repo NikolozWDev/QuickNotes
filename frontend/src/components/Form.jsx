@@ -9,16 +9,42 @@ const Form = ({route, method}) => {
 
     const { setIsAuthorized } = useAuth()
     const [username, setUsername] = React.useState("")
+    const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
+    const [confirmPassword, setConfirmPassword] = React.useState("")
     const [loading, setLoading] = React.useState(false)
     const navigate = useNavigate()
 
-    async function handleSubmit(e) {
+    async function handleSubmit1(e) {
         e.preventDefault()
         setLoading(true)
 
         try {
-            const res = await api.post(route, {username, password})
+            const res = await api.post(route, {email, password})
+            if(method === 'login') {
+                localStorage.setItem(ACCESS_TOKEN, res.data.access)
+                localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+                setIsAuthorized(true)
+                navigate('/')
+            } else {
+                navigate('/login')
+            }
+        } catch(error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+        async function handleSubmit2(e) {
+        e.preventDefault()
+        if(password !== confirmPassword) {
+            alert("passwords do not match")
+            return
+        }
+        setLoading(true)
+
+        try {
+            const res = await api.post(route, {username, email, password})
             if(method === 'login') {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access)
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
@@ -37,12 +63,25 @@ const Form = ({route, method}) => {
     return (
         <div className="flex flex-col justify-center items-start gap-[30px] w-[100%] shadow-md bg-gray-100 px-[20px] py-[40px] rounded-[24px] border-[1px] border-gray-300 md:w-[600px]">
             <p className="text-black font-bold text-[20px]">{method === 'login' ? "Login" : "Register"} Notes</p>
-            <form onSubmit={handleSubmit} className="flex flex-col justify-center items-start gap-[16px] w-[100%]">
-                <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='text' placeholder="Username" value={username} onChange={(e) => {setUsername(e.target.value)}} />
-                <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
-                <button className="w-[100%] rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]" type='submit'>{method === 'login' ? "Login" : "Register"}</button>
-                <p>{method === 'login' ? "Don't have an account?" : "Already have an account?"} <Link to={`${method === 'login' ? "/register" : "/login"}`} className="text-blue-600 cursor-pointer hover:text-gray-500 transition-all duration-[0.3s]">{method === 'login' ? "Register" : "Login"}</Link></p>
-            </form>
+            {
+                method === 'login' ? (
+                <form onSubmit={handleSubmit1} className="flex flex-col justify-center items-start gap-[16px] w-[100%]">
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='email' placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} />
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                    <button className="w-[100%] rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]" type='submit'>{method === 'login' ? "Login" : "Register"}</button>
+                    <p>{method === 'login' ? "Don't have an account?" : "Already have an account?"} <Link to={`${method === 'login' ? "/register" : "/login"}`} className="text-blue-600 cursor-pointer hover:text-gray-500 transition-all duration-[0.3s]">{method === 'login' ? "Register" : "Login"}</Link></p>
+                </form>
+                ) : (
+                <form onSubmit={handleSubmit2} className="flex flex-col justify-center items-start gap-[16px] w-[100%]">
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='text' placeholder="Username" value={username} onChange={(e) => {setUsername(e.target.value)}} />
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='email' placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} />                    
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Confrim Password" value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value)}} />
+                    <button className="w-[100%] rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]" type='submit'>{method === 'login' ? "Login" : "Register"}</button>
+                    <p>{method === 'login' ? "Don't have an account?" : "Already have an account?"} <Link to={`${method === 'login' ? "/register" : "/login"}`} className="text-blue-600 cursor-pointer hover:text-gray-500 transition-all duration-[0.3s]">{method === 'login' ? "Register" : "Login"}</Link></p>
+                </form>
+                )
+            }
         </div>
     )
 }

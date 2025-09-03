@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework import generics, views, response
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from .models import Note
-from .serializers import UserSerializer, NoteSerializer
+from .serializers import UserSerializer, NoteSerializer, EmailTokenObtainPairSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # Create your views here.
@@ -21,6 +22,10 @@ class CurrentUserView(views.APIView):
             "username": request.user.username,
             "email": request.user.email
         })
+
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
 
 
 class CreateNoteView(generics.ListCreateAPIView):
