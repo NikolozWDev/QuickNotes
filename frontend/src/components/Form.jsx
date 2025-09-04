@@ -44,7 +44,7 @@ const Form = ({route, method}) => {
         setLoading(true)
 
         try {
-            const res = await api.post(route, {username, email, password})
+            const res = await api.post(route, {username, email, password, confirm_password: confirmPassword})
             if(method === 'login') {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access)
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh)

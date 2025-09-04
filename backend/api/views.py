@@ -1,31 +1,42 @@
 from django.shortcuts import render
 from rest_framework import generics, views, response
+from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
-from .models import Note
-from .serializers import UserSerializer, NoteSerializer, EmailTokenObtainPairSerializer
+from .models import Note, CustomUser
+from .serializers import NoteSerializer, EmailTokenObtainPairSerializer, RegisterSerializer, ShowUserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # Create your views here.
 class CreateUserView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = CustomUser.objects.all()
+    serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
+
+
+class RegisterView(generics.CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
 
 
 class CurrentUserView(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return response.Response({
-            "id": request.user.id,
-            "username": request.user.username,
-            "email": request.user.email
-        })
+        return Response(ShowUserSerializer(request.user).data)
 
 
-class EmailTokenObtainPairView(TokenObtainPairView):
-    serializer_class = EmailTokenObtainPairSerializer
+class DeleteAccountView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response({"Message": "Account deleted successfully"})
 
 
 class CreateNoteView(generics.ListCreateAPIView):
@@ -54,7 +65,7 @@ class DeleteNoteView(generics.DestroyAPIView):
 
 class UpdateNoteView(generics.UpdateAPIView):
     serializer_class = NoteSerializer
-    permission_classees = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user

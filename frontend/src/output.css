@@ -681,6 +681,10 @@ video {
   margin-top: 200px;
 }
 
+.mt-\[5px\]{
+  margin-top: 5px;
+}
+
 .flex{
   display: flex;
 }
@@ -887,6 +891,10 @@ video {
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.cursor-default{
+  cursor: default;
 }
 
 .resize-none{

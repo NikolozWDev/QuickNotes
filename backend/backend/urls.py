@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, CurrentUserView, EmailTokenObtainPairView
+from api.views import EmailTokenObtainPairView, RegisterView, CurrentUserView, DeleteAccountView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user/register/', CreateUserView.as_view(), name="register"),
-    path('api/token/', EmailTokenObtainPairView.as_view(), name="get_token"),
+    path('api/user/register/', RegisterView.as_view(), name="register"),
+    path('api/user/delete/', DeleteAccountView.as_view(), name="delete_account"),
+    path("api/token/", EmailTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name="refresh"),
     path('api/user/me/', CurrentUserView.as_view(), name="user_view"),
     path('api-auth/', include("rest_framework.urls")),
