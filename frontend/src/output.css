@@ -889,12 +889,12 @@ video {
   animation: righter 0.6s linear;
 }
 
-.cursor-pointer{
-  cursor: pointer;
-}
-
 .cursor-default{
   cursor: default;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
 
 .resize-none{
@@ -975,6 +975,14 @@ video {
 
 .gap-\[8px\]{
   gap: 8px;
+}
+
+.gap-\[1px\]{
+  gap: 1px;
+}
+
+.gap-\[10px\]{
+  gap: 10px;
 }
 
 .overflow-hidden{

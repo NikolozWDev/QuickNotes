@@ -16,6 +16,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data["password"] != data["confirm_password"]:
             raise serializers.ValidationError("Password do not match")
+        if len(data["username"]) >= 20:
+            raise serializers.ValidationError("Username is to match")
+        if len(data["email"]) >= 40:
+            raise serializers.ValidationError("Email is to match")
+        if len(data["password"]) >= 20:
+            raise serializers.ValidationError("Password is to match")
         return data
     
     def create(self, validated_data):

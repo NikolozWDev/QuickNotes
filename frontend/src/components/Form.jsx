@@ -12,6 +12,11 @@ const Form = ({route, method}) => {
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [confirmPassword, setConfirmPassword] = React.useState("")
+    // register/login validations
+    const [validatedUsername, setValidatedUsername] = React.useState(false)
+    const [validatedEmail, setValidatedEmail] = React.useState(false)
+    const [validatedPassword, setValidatedPassword] = React.useState(false)
+    const [isPassword, setIsPassword] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const navigate = useNavigate()
 
@@ -72,11 +77,23 @@ const Form = ({route, method}) => {
                     <p>{method === 'login' ? "Don't have an account?" : "Already have an account?"} <Link to={`${method === 'login' ? "/register" : "/login"}`} className="text-blue-600 cursor-pointer hover:text-gray-500 transition-all duration-[0.3s]">{method === 'login' ? "Register" : "Login"}</Link></p>
                 </form>
                 ) : (
-                <form onSubmit={handleSubmit2} className="flex flex-col justify-center items-start gap-[16px] w-[100%]">
-                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='text' placeholder="Username" value={username} onChange={(e) => {setUsername(e.target.value)}} />
-                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='email' placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} />                    
-                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
-                    <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Confrim Password" value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value)}} />
+                <form onSubmit={handleSubmit2} className="flex flex-col justify-center items-start gap-[10px] w-[100%]">
+                    <div className="flex flex-col justify-start items-start w-[100%] gap-[4px]">
+                        <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='text' placeholder="Username" value={username} onChange={(e) => {setUsername(e.target.value); setValidatedUsername(e.target.value.length >= 20)}} />
+                        <p className="text-[16px] text-red-500">{validatedUsername ? "Username must be less then 20 words" : ""}</p>
+                    </div>
+                    <div className="flex flex-col justify-start items-start w-[100%] gap-[4px]">
+                        <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='email' placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value); setValidatedEmail(e.target.value.length >= 40)}} />
+                        <p className="text-[16px] text-red-500">{validatedEmail ? "Email must be less then 40 words" : ""}</p>
+                    </div>
+                    <div className="flex flex-col justify-start items-start w-[100%] gap-[4px]">      
+                        <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value); setValidatedPassword(e.target.value.length >= 20)}} />
+                        <p className="text-[16px] text-red-500">{validatedPassword ? "Password must be less then 20 words" : ""}</p>
+                    </div>
+                    <div className="flex flex-col justify-start items-start w-[100%] gap-[4px]">
+                        <input className="px-[14px] py-[6px] rounded-[8px] w-[100%] border-[1px] border-black" type='password' placeholder="Confrim Password" value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value); setIsPassword(e.target.value !== password)}} />
+                        <p className="text-[16px] text-red-500">{isPassword ? "this password is not identical then first" : ""}</p>
+                    </div>
                     <button className="w-[100%] rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]" type='submit'>{method === 'login' ? "Login" : "Register"}</button>
                     <p>{method === 'login' ? "Don't have an account?" : "Already have an account?"} <Link to={`${method === 'login' ? "/register" : "/login"}`} className="text-blue-600 cursor-pointer hover:text-gray-500 transition-all duration-[0.3s]">{method === 'login' ? "Register" : "Login"}</Link></p>
                 </form>
