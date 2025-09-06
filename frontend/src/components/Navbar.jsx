@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-const Navbar = () => {
+const Navbar = ({loading, setLoading}) => {
   const { isAuthorized, setIsAuthorized } = useAuth();
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -14,12 +15,15 @@ const Navbar = () => {
 
   React.useEffect(() => {
     getUser();
+    setLoading(false)
   }, []);
 
   async function getUser() {
+    setLoading(true)
     const res = await api.get("/api/user/me/");
     setUsername(res.data.username);
     setEmail(res.data.email);
+    setLoading(false)
   }
 
   function menuFunction() {
@@ -30,28 +34,23 @@ const Navbar = () => {
     }
   }
   function logout() {
+    setLoading(true)
     localStorage.removeItem(ACCESS_TOKEN);
     setIsAuthorized(false);
+    setLoading(false)
     navigate("/login");
   }
 
   // delete account
   async function deleteAccount() {
-    if(window.confirm("Are you sure you want to delete you'r account?")) {
-      await api.delete("/api/user/delete/")
-      alert("Your account has been deleted")
-      localStorage.removeItem(ACCESS_TOKEN)
-      localStorage.removeItem(REFRESH_TOKEN)
-      window.location.href = "/"
-    }
-  }
-
-  // open user menu
-  function userMenuFunc() {
-    if (userMenu) {
-      setUserMenu(false);
-    } else {
-      setUserMenu(true);
+    setLoading(true)
+    if (window.confirm("Are you sure you want to delete you'r account?")) {
+      await api.delete("/api/user/delete/");
+      setLoading(false)
+      alert("Your account has been deleted");
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+      window.location.href = "/";
     }
   }
 
@@ -69,6 +68,11 @@ const Navbar = () => {
             QuickNotes
           </Link>
           <div className="hidden flex-row justify-center items-center gap-[12px] md:flex">
+            {loading ? (
+              <div className="w-[100%] flex flex-row justify-center items-center">
+                <Loading />
+              </div>
+            ) : null}
             <Link
               to="/about"
               onClick={() => {
@@ -206,20 +210,20 @@ const Navbar = () => {
                     </small>
                   </p>
                   <hr className="w-full my-[4px] border-gray-300" />
-                    <div className="flex flex-col justify-center items-center gap-[4px] mt-[5px]">
-                      <button
-                        onClick={logout}
-                        className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]"
-                      >
-                        Logout
-                      </button>
-                      <button
-                        onClick={deleteAccount}
-                        className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]"
-                      >
-                        Delete Account
-                      </button>
-                    </div>
+                  <div className="flex flex-col justify-center items-center gap-[4px] mt-[5px]">
+                    <button
+                      onClick={logout}
+                      className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]"
+                    >
+                      Logout
+                    </button>
+                    <button
+                      onClick={deleteAccount}
+                      className="px-[15px] py-[6px] rounded-[8px] bg-gray-700 text-red-500 hover:opacity-[0.8] transition-all duration-[0.3s]"
+                    >
+                      Delete Account
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

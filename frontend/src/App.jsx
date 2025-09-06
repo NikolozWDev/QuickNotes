@@ -20,16 +20,17 @@ function RegisterAndLogout() {
 }
 
 const App = () => {
+  const [loading, setLoading] = React.useState(false)
   return (
     <>
     <Router>
       <AuthProvider>
-        <Navbar />
+        <Navbar loading={loading} setLoading={setLoading} />
         <div className="main-container px-[20px] bg-[url(../public/assets/picture1.jpg)] bg-no-repeat bg-center bg-cover bg-fixed min-h-screen w-screen">
           <Routes>
             <Route path="/" element={
               <ProtectedRoute>
-                <HomePage />
+                <HomePage setLoading={setLoading} />
               </ProtectedRoute>
             } />
             <Route path="/register" element={<RegisterPage />} />

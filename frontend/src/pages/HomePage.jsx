@@ -1,8 +1,9 @@
 import React from "react";
 import api from "../api";
 import Note from "../components/Note";
+import Loading from "../components/Loading";
 
-const HomePage = () => {
+const HomePage = ({setLoading}) => {
   const [notes, setNotes] = React.useState([]);
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
@@ -19,15 +20,20 @@ const HomePage = () => {
   }, []);
 
   async function getNotes() {
+    setLoading(true)
     const res = await api.get("/api/notes/");
     setNotes(res.data);
+    setLoading(false)
   }
   async function deleteNotes(id) {
+    setLoading(true)
     await api.delete(`/api/notes/delete/${id}/`);
     getNotes();
+    setLoading(false)
   }
   const [isEditing, setIsEditing] = React.useState(null);
   async function updateNotes(id, updatedData) {
+    setLoading(true)
     validationNotes();
     if (title.length > 48 || content.length > 1200) {
       return;
@@ -39,9 +45,11 @@ const HomePage = () => {
     setContent("")
     setOpenNote(false)
     setOpenForm(false)
+    setLoading(false)
   }
   async function createNotes(e) {
     e.preventDefault();
+    setLoading(true)
     validationNotes();
     setIsEditing(null)
     if (title.length > 48 || content.length > 1200) {
@@ -53,48 +61,62 @@ const HomePage = () => {
     setContent("");
     setOpenNote(false);
     setOpenForm(false);
+    setLoading(false)
   }
   function editNote(note) {
+    setLoading(true)
+    setDeleteCont(false)
     setIsEditing(note);
     setTitle(note.title);
     setContent(note.content);
     setOpenForm(true);
+    setLoading(false)
   }
   function startCreateForm() {
+    setLoading(true)
     setIsEditing(null)
     setTitle("")
     setContent("")
     setOpenForm(true)
+    setLoading(false)
   }
   function handleForm(e) {
     e.preventDefault();
+    setLoading(true)
     if (isEditing && isEditing.id && isEditing !== null) {
       updateNotes(isEditing.id, {title, content});
     } else {
       createNotes(e);
     }
+    setLoading(false)
   }
   function searchNotes(id) {
+    setLoading(true)
     const note = notes.find((p) => p.id === id);
     setSelectorTitle(note.title);
     setSelectorContent(note.content);
     openNoteFunc();
+    setLoading(false)
   }
   // delete cont
   function areYouSure(id) {
+    setLoading(true)
     const nameOfNote = notes.find((p) => p.id === id);
     setNoteName(nameOfNote.title);
     closeNoteFunc();
     closeFormFunc();
     setNoteToDelete(id);
     setDeleteCont(true);
+    setLoading(false)
   }
   async function confrimDelete() {
+    setLoading(true)
     if (noteToDelete) {
       await deleteNotes(noteToDelete);
       setNoteToDelete(null);
       setDeleteCont(false);
     }
+    setLoading(false)
   }
   function cancelDelete() {
     setNoteToDelete(null);
@@ -104,9 +126,11 @@ const HomePage = () => {
   // open/close note
   const [openNote, setOpenNote] = React.useState(false);
   function openNoteFunc() {
+    setLoading(true)
     setOpenNote(true);
     closeFormFunc();
     cancelDelete();
+    setLoading(false)
   }
   function closeNoteFunc() {
     setOpenNote(false);
@@ -114,25 +138,30 @@ const HomePage = () => {
   // open/close create form
   const [openForm, setOpenForm] = React.useState(false);
   function openFormFunc() {
+    setLoading(true)
     startCreateForm()
     setOpenForm(true);
     setIsEditing(null)
     closeNoteFunc();
     cancelDelete();
+    setLoading(false)
   }
   function closeFormFunc() {
     setOpenForm(false);
   }
   // clear form
   function clearForm() {
+    setLoading(true)
     setTitle("");
     setContent("");
     setIsEditing(null)
+    setLoading(false)
   }
   // validations 48/1200
   const [validatedTitle, setValidatedTitle] = React.useState(false);
   const [validatedContent, setValidatedContent] = React.useState(false);
   function validationNotes() {
+    setLoading(true)
     if (title.length > 48) {
       setValidatedTitle(true);
     } else {
@@ -144,6 +173,7 @@ const HomePage = () => {
     } else {
       setValidatedContent(false);
     }
+    setLoading(false)
   }
 
   return (

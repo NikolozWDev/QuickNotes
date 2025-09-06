@@ -50,6 +50,10 @@ export default {
           '0%': {transform: 'translateY(350px)', pointerEvents: 'none'},
           '100%': {transform: 'translateY(0px)', pointerEvents: 'auto'},
         },
+        loading: {
+          '0%': {transform: 'rotate(0deg)'},
+          '100%': {transform: 'rotate(360deg)'}
+        }
       },
       animation: {
         navbar: 'navbar 0.8s linear',
@@ -57,6 +61,7 @@ export default {
         lefter: 'lefter 0.6s linear',
         righter: 'righter 0.6s linear',
         bottomer: 'bottomer 0.6s linear',
+        loading: 'loading 1s linear infinite',
       },
     },
   },
