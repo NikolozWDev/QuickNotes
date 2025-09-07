@@ -4,6 +4,7 @@ import Note from "../components/Note";
 import Loading from "../components/Loading";
 
 const HomePage = ({setLoading}) => {
+  const logo = "/icons/icon.jpg";
   const [notes, setNotes] = React.useState([]);
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
@@ -98,6 +99,14 @@ const HomePage = ({setLoading}) => {
     openNoteFunc();
     setLoading(false)
   }
+  const [filteredNotes, setFilteredNotes] = React.useState([])
+  const [searchTerm, setSearchTerm] = React.useState("")
+  function filterNotes(name) {
+    setLoading(true)
+    const note = notes.filter((p) => p.title.toLowerCase().includes(name.toLowerCase()))
+    setFilteredNotes(note)
+    setLoading(false)
+  }
   // delete cont
   function areYouSure(id) {
     setLoading(true)
@@ -180,7 +189,16 @@ const HomePage = ({setLoading}) => {
     <div className="w-[100%] pt-[100px] lg:pt-[140px] flex flex-col justify-center items-center gap-[60px] py-[30px]">
       <div className="lg:w-[976px] lg:px-[20px] w-[100%] flex flex-col justify-start items-start gap-[34px]">
         <div className="w-[100%] flex flex-row justify-between items-center">
-          <p className="text-black text-[18px] font-bold">Your Notes</p>
+          <div className="flex flex-col justify-start items-start md:flex-row md:justify-center md:items-center gap-[20px]">
+            <p className="text-black text-[18px] font-bold">Your Notes</p>
+            <div className="relative">
+              <input onChange={(e) => {setSearchTerm(e.target.value); filterNotes(e.target.value)}} value={searchTerm} className="border-t-[1px] border-b-[1px] border-l-[1px] border-gray-200 shadow-sm rounded-[8px] px-[10px] py-[6px] focus:outline-none focus:border-red-500" placeholder="Search Notes" type="text" />
+              <img src={logo} className="absolute w-[40px] h-[100%] right-[0] top-[0] rounded-[8px] border-r-[1px] border-red-500 cursor-pointer" />
+            </div>
+            <div>
+
+            </div>
+          </div>
           <button
             onClick={openFormFunc}
             className="px-[15px] py-[5px] rounded-[8px] text-white bg-gray-700 hover:opacity-[0.8] transition-all duration-[0.3s]"
@@ -189,7 +207,7 @@ const HomePage = ({setLoading}) => {
           </button>
         </div>
         <div className="w-[100%] flex flex-col-reverse justify-start items-start gap-[24px]">
-          {notes.map((note) => {
+          {(searchTerm ? filteredNotes : notes).map((note) => {
             return (
               <Note
                 key={note.id}
