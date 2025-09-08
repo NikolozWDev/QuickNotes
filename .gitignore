@@ -18,6 +18,6 @@ media/
 .vscode/
 .idea/
 
-# Node (თუ React დაემატება მერე)
+
 node_modules/
 build/
