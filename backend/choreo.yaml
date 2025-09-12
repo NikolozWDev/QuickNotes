@@ -3,7 +3,7 @@ components:
   - name: backend
     type: service
     source:
-      path: ./backend
+      path: ./
     build:
       language: python
       version: "3.11"
