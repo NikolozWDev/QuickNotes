@@ -30,7 +30,11 @@ SECRET_KEY = 'django-insecure-xkloojo_7hcuplgf9(bp3vmh5m*t*4wk(_0ov6jsyntmx_s$j^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["quicknotes-backend.onrender.com,localhost"]
+ALLOWED_HOSTS = [
+    "quicknotes-backend-pp1p.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
