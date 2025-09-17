@@ -2,10 +2,15 @@
 
 **QuickNotes** is a full-stack note-taking application built with **React**, **Tailwind CSS**, and **Django**.  
 It provides a clean, responsive interface for managing notes, while Django serves as the backend API.
-⚡ Note on Performance  
-This project is deployed on Render’s **free tier**, which has very limited resources.  
-As a result, the site may feel **slow** (especially on first load or database requests).  
-The slowdown is due to hosting limits, not the code itself.
+
+---
+
+⚡ **Performance Note**  
+This project is hosted on Render’s **free tier**, which has limited resources.  
+Because of that, the app may feel **slow at times (first load, refresh, or heavy requests)**.  
+The slowdown comes from hosting limits, not the application itself.  
+
+---
 
 ---
 
