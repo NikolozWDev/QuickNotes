@@ -297,13 +297,12 @@ const HomePage = ({setLoading}) => {
               shadow-lg
               rounded-lg
               overflow-y-auto
-              bg-[url(../../public/assets/picture3.jpg)]
               transition-all duration-500
       ${
         openForm
           ? "opacity-100 mt-[0px] pointer-events-auto"
           : "opacity-0 mt-[200px] pointer-events-none"
-      }`}
+      }`} style={{backgroundImage: `url(${picture3})`}}
       >
         <div className="relative w-[100%] flex flex-row justify-center items-center">
           <p className="text-[20px] font-bold text-red-500">Create Note</p>
