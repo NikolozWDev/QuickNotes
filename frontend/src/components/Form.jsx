@@ -116,7 +116,7 @@ const Form = ({ route, method }) => {
               </div>
             ) : null}
             <button
-              className="w-[100%] rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]"
+              className={`w-[100%] ${method === "login" ? "w-[150px]" : ''} rounded-[8px] py-[6px] text-white text-[16px] bg-red-500 md:w-[150px]`}
               type="submit"
             >
               {method === "login" ? "Login" : "Register"}

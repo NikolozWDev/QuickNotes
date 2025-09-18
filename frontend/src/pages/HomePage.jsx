@@ -2,6 +2,7 @@ import React from "react";
 import api from "../api";
 import Note from "../components/Note";
 import Loading from "../components/Loading";
+import picture3 from "../../public/assets/picture3.jpg";
 
 const HomePage = ({setLoading}) => {
   const logo = "/icons/icon.jpg";
@@ -34,35 +35,45 @@ const HomePage = ({setLoading}) => {
   }
   const [isEditing, setIsEditing] = React.useState(null);
   async function updateNotes(id, updatedData) {
-    setLoading(true)
-    validationNotes();
-    if (title.length > 48 || content.length > 1200) {
-      return;
+    setLoading(true);
+    try {
+      validationNotes();
+      if (title.length > 48 || content.length > 1200) {
+        return;
+      }
+      await api.put(`/api/notes/update/${id}/`, updatedData);
+      setIsEditing(null);
+      await getNotes();
+      setTitle("");
+      setContent("");
+      setOpenNote(false);
+      setOpenForm(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    await api.put(`/api/notes/update/${id}/`, updatedData);
-    setIsEditing(null);
-    getNotes()
-    setTitle("")
-    setContent("")
-    setOpenNote(false)
-    setOpenForm(false)
-    setLoading(false)
   }
   async function createNotes(e) {
     e.preventDefault();
-    setLoading(true)
-    validationNotes();
-    setIsEditing(null)
-    if (title.length > 48 || content.length > 1200) {
-      return;
+    setLoading(true);
+    try {
+      validationNotes();
+      setIsEditing(null);
+      if (title.length > 48 || content.length > 1200) {
+        return;
+      }
+      await api.post("/api/notes/", { title, content });
+      await getNotes();
+      setTitle("");
+      setContent("");
+      setOpenNote(false);
+      setOpenForm(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    await api.post("/api/notes/", { title, content });
-    getNotes();
-    setTitle("");
-    setContent("");
-    setOpenNote(false);
-    setOpenForm(false);
-    setLoading(false)
   }
   function editNote(note) {
     setLoading(true)
@@ -81,15 +92,20 @@ const HomePage = ({setLoading}) => {
     setOpenForm(true)
     setLoading(false)
   }
-  function handleForm(e) {
+  async function handleForm(e) {
     e.preventDefault();
-    setLoading(true)
-    if (isEditing && isEditing.id && isEditing !== null) {
-      updateNotes(isEditing.id, {title, content});
-    } else {
-      createNotes(e);
+    setLoading(true);
+    try {
+      if (isEditing && isEditing.id) {
+        await updateNotes(isEditing.id, { title, content });
+      } else {
+        await createNotes(e);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false)
   }
   function searchNotes(id) {
     setLoading(true)
@@ -188,7 +204,7 @@ const HomePage = ({setLoading}) => {
   return (
     <div className="w-[100%] pt-[100px] lg:pt-[140px] flex flex-col justify-center items-center gap-[60px] py-[30px]">
       <div className="lg:w-[976px] lg:px-[20px] w-[100%] flex flex-col justify-start items-start gap-[34px]">
-        <div className="w-[100%] flex flex-row justify-between items-center">
+        <div className="w-[100%] flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-col justify-start items-start md:flex-row md:justify-center md:items-center gap-[20px]">
             <p className="text-black text-[18px] font-bold">Your Notes</p>
             <div className="relative">
@@ -235,12 +251,11 @@ const HomePage = ({setLoading}) => {
                     shadow-lg
                     rounded-lg
                     overflow-y-auto
-                    bg-[url(../../public/assets/picture3.jpg)] transition-all duration-[0.5s]
             ${
               openNote
                 ? "opacity-[1] top-1/2 pointer-events-auto"
                 : "opacity-[0] top-[100px] pointer-events-none"
-            }`}
+            }`} style={{backgroundImage: `url(${picture3})`}}
       >
         <div className="relative w-[100%] flex flex-row justify-center items-center">
           <p className="break-words">{selectorTitle}</p>
@@ -379,14 +394,13 @@ const HomePage = ({setLoading}) => {
               shadow-lg
               rounded-lg
               overflow-y-auto
-              bg-[url(../../public/assets/picture3.jpg)]
               transition-all duration-500
                     ${
                       deleteCont
                         ? "opacity-100 ml-[0px] pointer-events-auto"
                         : "opacity-0 ml-[300px] pointer-events-none"
                     }
-              `}
+              `} style={{backgroundImage: `url(${picture3})`}}
       >
         <div className="flex flex-col justify-center items-center gap-[20px]">
           <p className="text-black text-[16px]">

@@ -6,7 +6,7 @@ import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-const Navbar = ({loading, setLoading}) => {
+const Navbar = ({ loading, setLoading }) => {
   const { isAuthorized, setIsAuthorized } = useAuth();
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -15,15 +15,15 @@ const Navbar = ({loading, setLoading}) => {
 
   React.useEffect(() => {
     getUser();
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   async function getUser() {
-    setLoading(true)
+    setLoading(true);
     const res = await api.get("/api/user/me/");
     setUsername(res.data.username);
     setEmail(res.data.email);
-    setLoading(false)
+    setLoading(false);
   }
 
   function menuFunction() {
@@ -34,19 +34,19 @@ const Navbar = ({loading, setLoading}) => {
     }
   }
   function logout() {
-    setLoading(true)
+    setLoading(true);
     localStorage.removeItem(ACCESS_TOKEN);
     setIsAuthorized(false);
-    setLoading(false)
+    setLoading(false);
     navigate("/login");
   }
 
   // delete account
   async function deleteAccount() {
-    setLoading(true)
+    setLoading(true);
     if (window.confirm("Are you sure you want to delete you'r account?")) {
       await api.delete("/api/user/delete/");
-      setLoading(false)
+      setLoading(false);
       alert("Your account has been deleted");
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
@@ -58,15 +58,22 @@ const Navbar = ({loading, setLoading}) => {
     <>
       <div className="flex flex-row justify-center items-center w-[100%] bg-yellow-100 z-[100] fixed animate-navbar">
         <div className="w-[100%] p-[20px] flex flex-row justify-between items-center z-[60] lg:w-[976px]">
-          <Link
-            to="/"
-            onClick={() => {
-              setMenubar(false);
-            }}
-            className="text-red-500 font-bold text-[24px] font-inter cursor-pointer"
-          >
-            QuickNotes
-          </Link>
+          <div className="flex flex-row justify-center items-center gap-[12px]">
+            <Link
+              to="/"
+              onClick={() => {
+                setMenubar(false);
+              }}
+              className="text-red-500 font-bold text-[24px] font-inter cursor-pointer"
+            >
+              QuickNotes
+            </Link>
+            {loading ? (
+              <div className="w-[100%] flex flex-row justify-center items-center md:hidden">
+                <Loading />
+              </div>
+            ) : null}
+          </div>
           <div className="hidden flex-row justify-center items-center gap-[12px] md:flex">
             {loading ? (
               <div className="w-[100%] flex flex-row justify-center items-center">
