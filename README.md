@@ -4,6 +4,16 @@
 It provides a clean, responsive interface for managing notes, while Django serves as the backend API.
 
 ---
+live site: https://quicknotes-dev.onrender.com
+
+⚡ **Performance Note**  
+This project is hosted on Render’s **free tier**, which has limited resources.  
+Because of that, the app may feel **slow at times (first load, refresh, or heavy requests)**.  
+The slowdown comes from hosting limits, not the application itself.  
+
+---
+
+---
 
 ## 📌 Overview
 QuickNotes allows users to **create, edit, delete, and search notes** with a smooth user experience.  
