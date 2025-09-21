@@ -28,7 +28,7 @@ const Note = ({note, onSearch, onEdit, onDelete}) => {
 
     return (
         <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-center gap-[12px] md:gap-[4px] pt-[10px] px-[10px] border-t-[1px] border-gray-400 w-[100%]">
-            <p onClick={() => {onSearch(note.id)}} className="flex flex-row justify-center items-center md:justify-start items-start text-black text-[16px] font-bold cursor-pointer hover:text-gray-500 transition-all duration-[0.3s] underline break-words whitespace-normal w-[100%] md:w-[100px] md:w-[300px] animate-note"><small className="text-[12px] font-none text-gray-500 pr-[5px]">Name: </small>{note.title}</p>
+            <p onClick={() => {onSearch(note.id)}} className="flex flex-row justify-center items-center md:justify-start items-start text-black text-[16px] font-bold cursor-pointer hover:text-gray-500 transition-all duration-[0.3s] underline break-words whitespace-normal w-[100%] md:w-[100px] md:w-[300px] animate-note"><small className="text-[12px] font-none text-gray-500 pr-[5px]">Name: </small><span className="break-words max-w-[200px]">{note.title}</span></p>
             <div className="flex flex-col lg:flex-row justify-center items-center gap-[8px]">
                 <p className="text-gray-500 text-[12px]"><small>created: </small>{timeAgo(note.created)}</p>
                 <div className="flex flex-row gap-[4px]">

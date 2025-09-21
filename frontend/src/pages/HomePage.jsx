@@ -243,7 +243,8 @@ const HomePage = ({setLoading}) => {
                     left-1/2
                     transform -translate-x-1/2 -translate-y-1/2
                     w-[90%] lg:w-[976px]
-                    max-h-[80vh]
+                    max-h-[60vh]
+                    md:max-h-[80vh]
                     bg-white
                     z-50
                     p-6
@@ -258,10 +259,10 @@ const HomePage = ({setLoading}) => {
             }`} style={{backgroundImage: `url(${picture3})`}}
       >
         <div className="relative w-[100%] flex flex-row justify-center items-center">
-          <p className="break-words">{selectorTitle}</p>
+          <p className="break-words max-w-[200px]">{selectorTitle}</p>
           <div
             onClick={closeNoteFunc}
-            className="absolute z-[31] top-[0px] right-[20px]"
+            className="absolute z-[31] top-[-25px] right-[-10px] md:top-[-10px] md:right-[10px]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -271,7 +272,7 @@ const HomePage = ({setLoading}) => {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 text-black cursor-pointer hover:text-red-500 transition-all duration-300"
+              className="w-8 h-8 md:w-10 md:h-10 text-black cursor-pointer hover:text-red-500 transition-all duration-300"
             >
               <path d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
@@ -289,7 +290,8 @@ const HomePage = ({setLoading}) => {
               left-1/2
               transform -translate-x-1/2 -translate-y-1/2
               w-[90%] lg:w-[976px]
-              max-h-[80vh]
+              max-h-[60vh]
+              md:max-h-[90vh]
               bg-white
               z-50
               p-6
@@ -308,7 +310,7 @@ const HomePage = ({setLoading}) => {
           <p className="text-[20px] font-bold text-red-500">Create Note</p>
           <div
             onClick={closeFormFunc}
-            className="absolute z-[31] top-[0px] right-[20px]"
+            className="absolute z-[31] top-[-25px] right-[-10px] md:top-[-10px] md:right-[10px]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +320,7 @@ const HomePage = ({setLoading}) => {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 text-black cursor-pointer hover:text-red-500 transition-all duration-300"
+              className="w-8 h-8 md:w-10 md:h-10 text-black cursor-pointer hover:text-red-500 transition-all duration-300"
             >
               <path d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
@@ -402,7 +404,7 @@ const HomePage = ({setLoading}) => {
               `} style={{backgroundImage: `url(${picture3})`}}
       >
         <div className="flex flex-col justify-center items-center gap-[20px]">
-          <p className="text-black text-[16px]">
+          <p className="text-black text-[16px] break-words max-w-[100%]">
             Are You Sure you want to delete{" "}
             <strong className="underline text-[18px]">{noteName}</strong> ?
           </p>
