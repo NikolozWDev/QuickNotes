@@ -4,6 +4,7 @@
 It provides a clean, responsive interface for managing notes, while Django serves as the backend API.
 
 ---
+This site is hosted on free server. it has lags and low performance
 live site: https://quicknotes-dev.onrender.com
 download for mobile: https://mega.nz/file/zz4HjSxD#Q7VkyxKBPa215b1PgnNzP-JQYWZwcXxWLV8tgrjQqYc
 
