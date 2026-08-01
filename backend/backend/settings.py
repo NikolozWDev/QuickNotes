@@ -87,7 +87,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'HOST': os.getenv("SUPABASE_HOST"),
-            'PORT': int(os.getenv("SUPABASE_PORT", 5432)),
+            'PORT': int(os.getenv("SUPABASE_PORT", 6543)),
             'USER': os.getenv("SUPABASE_USER"),
             'NAME': os.getenv("SUPABASE_NAME"),
             'PASSWORD': os.getenv("SUPABASE_PWD"),
