@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/server": "^1.4.1",
     "axios": "^1.11.0",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
