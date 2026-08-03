@@ -1,14 +1,19 @@
 import React from "react";
 import { useAuth } from "../AuthProvider";
 import { Navigate } from "react-router-dom";
+import Loading from "./Loading";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthorized } = useAuth();
+    const { isAuthorized, authLoading } = useAuth();
 
-  if (isAuthorized === null) {
-    return <p>Loading...</p>;
-  }
+    if (authLoading || isAuthorized === null) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
 
-  return isAuthorized ? children : <Navigate to="/login" />;
+    return isAuthorized ? children : <Navigate to="/login" />;
 };
 export default ProtectedRoute;
