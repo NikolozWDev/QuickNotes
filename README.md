@@ -1,67 +1,25 @@
-# QuickNotes
+# InkFlow-Official
 
-**QuickNotes** is a full-stack note-taking application built with **React**, **Tailwind CSS**, and **Django**.  
-It provides a clean, responsive interface for managing notes, while Django serves as the backend API.
+A modern web application for creating, publishing, and managing written content through a clean and intuitive interface.
 
----
-This site is hosted on free server. it has lags and low performance
-live site: https://quicknotes-dev.onrender.com
-download for mobile: https://mega.nz/file/zz4HjSxD#Q7VkyxKBPa215b1PgnNzP-JQYWZwcXxWLV8tgrjQqYc
+Built with Django, the project focuses on delivering a structured content management experience with an emphasis on simplicity, usability, and maintainable architecture.
 
-⚡ **Performance Note**  
-This project is hosted on Render’s **free tier**, which has limited resources.  
-Because of that, the app may feel **slow at times (first load, refresh, or heavy requests)**.  
-The slowdown comes from hosting limits, not the application itself.  
+## Website
 
----
+**Live Demo:**  
+https://inkflow-official.vercel.app/
 
----
+## About
 
-## 📌 Overview
-QuickNotes allows users to **create, edit, delete, and search notes** with a smooth user experience.  
-It combines a modern React frontend with Tailwind CSS styling and a powerful Django backend for data persistence.
+InkFlow was developed as a full-stack web application that brings together content publishing, user accounts, and responsive design in a unified platform.
 
----
+The project emphasizes clean organization, straightforward navigation, and an interface that makes creating and managing articles feel simple and intuitive.
 
-## ✨ Features
-- Create, edit, and delete notes (CRUD).
-- Real backend with Django REST Framework.
-- Authentication support (JWT).
-- Search and filter notes.
-- Responsive UI powered by Tailwind CSS.
-- Organized, scalable full-stack architecture.
+## Technologies Used
 
----
-
-## 🧰 Tech Stack
-- **Frontend:** React, Tailwind CSS  
-- **Backend:** Django (Django REST Framework)  
-- **Database:** SQLite (development) / PostgreSQL (production)  
-- **Other:** JWT Authentication, REST API, GitHub for version control  
-
----
-
-## 🚀 Installation & Setup
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/<username>/<repo>.git
-cd <repo>
-
-2️⃣ Backend (Django)
-bash
-Copy code
-cd backend
-python -m venv env
-source env/bin/activate   # On Windows: env\Scripts\activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-👉 The backend will be running at: http://127.0.0.1:8000
-
-3️⃣ Frontend (React + Tailwind)
-Copy code
-cd frontend
-npm install
-npm start
-👉 The frontend will be running at: http://localhost:3000
+- Python
+- Django
+- HTML5
+- CSS3
+- JavaScript
+- PostgreSQL
